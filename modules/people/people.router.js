@@ -19,9 +19,8 @@ router.post("/", json.json(), (req, res) => {
   return res.status(201).json({ name: person });
 });
 
-router.delete("/", json, (req, res) => {
+router.delete("/", json.json(), (req, res) => {
   // Remove a pet from adoption.
-
   return res.status(200).json(People.dequeue());
 });
 
