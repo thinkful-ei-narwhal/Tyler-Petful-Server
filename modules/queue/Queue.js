@@ -1,23 +1,63 @@
 class Queue {
   constructor() {
     // Set initial data.
+    this.first = null;
+    this.last = null;
   }
 
   enqueue(data) {
-    // Add some data to the queue.
+    const node = new _NodeQ(data);
+
+    if (this.first === null) {
+      this.first = node;
+    }
+
+    if (this.last) {
+      this.last.next = node;
+    }
+    //make the new node the last item on the queue
+    this.last = node;
   }
 
   dequeue() {
-    // Remove some data from the queue.
+    //if the queue is empty, there is nothing to return
+    if (this.first === null) {
+      return;
+    }
+    const node = this.first;
+    this.first = this.first.next;
+    //if this is the last item in the queue
+    if (node === this.last) {
+      this.last = null;
+    }
+    return node.value;
   }
 
   show() {
-    // Return the next item in the queue.
+    //if the top of the stack does not have anything
+    //then the stack is empty
+    //otherwise return what's on the top
+    if (s.top === null) {
+      return null;
+    }
+
+    return s.top.data;
   }
 
   all() {
-    // Return all items in the queue.
+    let node = newStack.top;
+    while (node) {
+      console.log(node.data);
+      node = node.next;
+    }
   }
 }
 
-module.exports = Queue
+class _NodeQ {
+  constructor(value) {
+    this.value = null;
+    this.next = null;
+  }
+}
+
+module.exports = Queue;
