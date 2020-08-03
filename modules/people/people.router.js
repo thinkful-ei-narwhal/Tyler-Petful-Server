@@ -1,22 +1,10 @@
 const express = require("express");
 const People = require("./people.service");
 const parser = require("body-parser");
-const { CLIENT_ORIGIN } = require("../config");
 
 const peopleRouter = express.Router();
 
 const jsonBodyParser = parser.json();
-
-const app = express();
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", `${CLIENT_ORIGIN}`); // update to match the domain you will make the request from
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
 
 peopleRouter.get("/", (req, res) => {
   // Return all the people currently in the queue.
