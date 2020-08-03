@@ -1,9 +1,10 @@
 const express = require("express");
-const json = require("body-parser");
-
 const People = require("./people.service");
+const parser = require("body-parser");
 
 const peopleRouter = express.Router();
+
+const jsonBodyParser = parser.json();
 
 peopleRouter.get("/", (req, res) => {
   // Return all the people currently in the queue.
@@ -17,10 +18,11 @@ peopleRouter.get("/", (req, res) => {
   res.status(200).json(people);
 });
 
-peopleRouter.post("/", json, (req, res) => {
+peopleRouter.post("/", jsonBodyParser, async (req, res) => {
   // Add a new person to the queue.
   const { name } = req.body;
   const newPerson = name;
+
   // eslint-disable-next-line eqeqeq
   for (const [key, value] of Object.entries(newPerson))
     if (value == null) {
@@ -28,11 +30,11 @@ peopleRouter.post("/", json, (req, res) => {
         .status(400)
         .json({ error: `Missing '${key}' in request body` });
     }
-  const people = People.enqueue(newPerson);
+  const people = await People.enqueue(newPerson);
   res.status(201).json(people);
 });
 
-peopleRouter.delete("/", json.json(), (req, res) => {
+peopleRouter.delete("/", jsonBodyParser, (req, res) => {
   People.dequeue();
 
   return res.status(204).end();

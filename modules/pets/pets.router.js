@@ -4,7 +4,7 @@ const json = require("body-parser");
 const Pets = require("./pets.service");
 
 const petsRouter = express.Router();
-
+const parser = json.json();
 petsRouter.get("/", (req, res) => {
   // Return all pets currently up for adoption.
 
@@ -21,7 +21,7 @@ petsRouter.get("/", (req, res) => {
   return res.status(200).json(pets);
 });
 
-petsRouter.delete("/:type", json, (req, res) => {
+petsRouter.delete("/:type", parser, (req, res) => {
   // Remove a pet from adoption.
   const { type } = req.params;
   let pet = Pets.dequeue(type);
