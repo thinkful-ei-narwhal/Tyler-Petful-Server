@@ -2,26 +2,40 @@ const express = require("express");
 const json = require("body-parser");
 
 const People = require("./people.service");
-const { people } = require("../../store");
 
-const router = express.Router();
+const peopleRouter = express.Router();
 
-router.get("/", (req, res) => {
+peopleRouter.get("/", (req, res) => {
   // Return all the people currently in the queue.
-  return res.status(200).json({ people: People.get() });
+  const people = People.get();
+
+  if (!people) {
+    return res.status(404).json({
+      error: { message: "There Are No Pets!" },
+    });
+  }
+  res.status(200).json(people);
 });
 
-router.post("/", json.json(), (req, res) => {
+peopleRouter.post("/", json, (req, res) => {
   // Add a new person to the queue.
-  const person = req.body.name;
-  People.enqueue(person);
-
-  return res.status(201).json({ name: person });
+  const { name } = req.body;
+  const newPerson = name;
+  // eslint-disable-next-line eqeqeq
+  for (const [key, value] of Object.entries(newPerson))
+    if (value == null) {
+      return res
+        .status(400)
+        .json({ error: `Missing '${key}' in request body` });
+    }
+  const people = People.enqueue(newPerson);
+  res.status(201).json(people);
 });
 
-router.delete("/", json.json(), (req, res) => {
-  // Remove a pet from adoption.
-  return res.status(200).json(People.dequeue());
+peopleRouter.delete("/", json.json(), (req, res) => {
+  People.dequeue();
+
+  return res.status(204).end();
 });
 
-module.exports = router;
+module.exports = peopleRouter;

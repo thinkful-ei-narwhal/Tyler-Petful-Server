@@ -1,63 +1,59 @@
 class Queue {
-	constructor() {
-		// Set initial data.
-		this.first = null;
-		this.last = null;
-	}
+  constructor() {
+    //set initial data
+    this.first = null;
+    this.last = null;
+  }
 
-	enqueue(data) {
-		const node = new _NodeQ(data);
+  enqueue(data) {
+    const node = new _Node(data, null);
 
-		if (this.first === null) {
-			this.first = node;
-		}
-
-		if (this.last) {
-			this.last.next = node;
-		}
-		//make the new node the last item on the queue
-		this.last = node;
-	}
-
-	dequeue() {
-		//if the queue is empty, there is nothing to return
-		if (this.first === null) {
-			return;
-		}
-		const node = this.first;
-		this.first = this.first.next;
-		//if this is the last item in the queue
-		if (node === this.last) {
-			this.last = null;
-		}
-		return node.value;
-	}
-
-	/*  show() {
-    //if the top of the stack does not have anything
-    //then the stack is empty
-    //otherwise return what's on the top
-    if (s.top === null) {
-      return null;
+    if (this.first === null) {
+      this.first = node;
     }
 
-    return s.top.data;
+    if (this.last) {
+      this.last.next = node;
+    }
+
+    this.last = node;
+  }
+
+  dequeue() {
+    if (this.first === null) {
+      return;
+    }
+
+    const node = this.first;
+    this.first = this.first.next;
+
+    if (node === this.last) {
+      this.last = null;
+    }
+    return node.data;
+  }
+
+  show() {
+    return this.first;
   }
 
   all() {
-    let node = newStack.top;
-    while (node) {
-      console.log(node.data);
-      node = node.next;
+    let current = this.first;
+    let display = [];
+    while (current) {
+      display.push(current.data);
+      current = current.next;
     }
-  } */
+    return display.join(", ");
+  }
 }
 
-class _NodeQ {
-	constructor(value) {
-		this.value = value;
-		this.next = null;
-	}
+class _Node {
+  constructor(data, next, previous) {
+    this.data = data;
+    this.next = next;
+    this.previous = previous;
+  }
 }
 
 module.exports = Queue;
