@@ -7,11 +7,11 @@ const peopleRouter = require("../people/people.router");
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "https://petful-client-xi.vercel.app/",
-  })
-);
+// app.use(
+//   cors({
+//     origin: "https://petful-client-xi.vercel.app/",
+//   })
+// );
 
 app.use("/api/people", peopleRouter);
 app.use("/api/pets", petsRouter);
