@@ -1,17 +1,10 @@
 require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
-const { NODE_ENV, CLIENT_ORIGIN } = require("../config");
+const { NODE_ENV } = require("../config");
 const petsRouter = require("../pets/pets.router");
 const peopleRouter = require("../people/people.router");
 
 const app = express();
-
-app.use(
-  cors({
-    origin: CLIENT_ORIGIN,
-  })
-);
 
 app.use("/api/people", peopleRouter);
 app.use("/api/pets", petsRouter);
