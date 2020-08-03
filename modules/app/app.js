@@ -7,7 +7,11 @@ const peopleRouter = require("../people/people.router");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: CLIENT_ORIGIN,
+  })
+);
 
 app.use("/api/people", peopleRouter);
 app.use("/api/pets", petsRouter);
