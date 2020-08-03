@@ -9,17 +9,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://petful-client-xi.vercel.app/",
+    origin: CLIENT_ORIGIN,
   })
 );
-
-app.use("/api/", (req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://petful-client-xi.vercel.app/"
-  );
-  next();
-});
 
 app.use("/api/people", peopleRouter);
 app.use("/api/pets", petsRouter);
